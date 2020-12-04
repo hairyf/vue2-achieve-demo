@@ -2,8 +2,8 @@ class Compile {
   $vm: MVVM<any>
   $el: Element
   $fragment: DocumentFragment
-  constructor(el: string, vm: MVVM<any>) {
-    this.$vm = vm
+  constructor(el: string, $vm: MVVM<any>) {
+    this.$vm = $vm
     this.$el = document.querySelector(el) || document.body
     this.$fragment = this.node2Fragment(this.$el)
     this.compileElement(this.$fragment)

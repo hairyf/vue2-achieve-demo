@@ -6,12 +6,12 @@ interface Options<T> {
   }
 }
 class MVVM<T> {
-  el: string;
+  $el: string;
   $data: T;
   $options: Options<T>
   $compile: Compile
   constructor(opts: Options<T>){
-    this.el = opts.el
+    this.$el = opts.el
     this.$data = opts.data
     this.$options = opts
     // 实现数据代理

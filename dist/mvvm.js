@@ -17,7 +17,7 @@ class MVVM {
                 }
             });
         };
-        this.el = opts.el;
+        this.$el = opts.el;
         this.$data = opts.data;
         this.$options = opts;
         // 实现数据代理

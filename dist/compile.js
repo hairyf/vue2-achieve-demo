@@ -1,6 +1,6 @@
 "use strict";
 class Compile {
-    constructor(el, vm) {
+    constructor(el, $vm) {
         /** 将原生节点拷贝到 fragment 上 */
         this.node2Fragment = (el) => {
             const fragment = document.createDocumentFragment();
@@ -70,7 +70,7 @@ class Compile {
         this.isTextNode = (node) => {
             return node.nodeType === 3;
         };
-        this.$vm = vm;
+        this.$vm = $vm;
         this.$el = document.querySelector(el) || document.body;
         this.$fragment = this.node2Fragment(this.$el);
         this.compileElement(this.$fragment);
