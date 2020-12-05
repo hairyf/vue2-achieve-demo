@@ -1,8 +1,8 @@
-const observe = (value: any) => {
+const observe = (value: any, $vm:MVVM<any>) => {
   if (!value || typeof value !== 'object') {
     return false;
   }
-  return new Observer(value);
+  return new Observer(value, $vm);
 }
 /**
  * 监视者, 数据劫持
@@ -10,8 +10,10 @@ const observe = (value: any) => {
  */
 class Observer<T> {
   data: T
-  constructor(data: T) {
+  $vm: MVVM<any>
+  constructor(data: T, $vm:MVVM<any>) {
     this.data = data;
+    this.$vm = $vm
     this.walk()
   }
   /** 逐步添加反应式 */
@@ -46,14 +48,15 @@ class Observer<T> {
         if (newVal === value) {
           return false;
         }
+        this.$vm.$options.beforeUpdate?.()
         value = newVal
         // 新的值如果是 object，再次进行劫持
-        observe(value)
+        observe(value, this.$vm)
         // 通知订阅者
         dep.notify()
       }
     })
-    observe(value)
+    observe(value, this.$vm)
   }
 }
 

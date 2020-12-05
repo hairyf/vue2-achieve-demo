@@ -5,9 +5,11 @@ class Compile {
   constructor(el: string, $vm: MVVM<any>) {
     this.$vm = $vm
     this.$el = document.querySelector(el) || document.body
+    $vm.$options.beforeMount?.()
     this.$fragment = this.node2Fragment(this.$el)
     this.compileElement(this.$fragment)
     this.$el.appendChild(this.$fragment)
+    $vm.$options.mounted?.()
   }
   /** 将原生节点拷贝到 fragment 上 */
   node2Fragment = (el: Element) => {
@@ -148,6 +150,7 @@ const compileUtils = {
     updaterFunc && updaterFunc(node, _getVMVal($vm, exp))
     new Watcher($vm, exp, function (value, oldValue) {
       updaterFunc && updaterFunc(node, value, oldValue);
+      $vm.$options.updated?.()
     })
   },
   /** 属性节点指令事件处理

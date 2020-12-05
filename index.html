@@ -26,6 +26,15 @@
         count: 1,
         name: '',
       }
+    },
+    beforeCreate() {
+      console.log('--beforeCreate--')
+    },
+    beforeUpdate() {
+      console.log('--beforeUpdate--')
+    },
+    updated() {
+      console.log('--updated--')
     }
   })
   setInterval(() => {

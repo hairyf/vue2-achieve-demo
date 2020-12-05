@@ -1,16 +1,16 @@
 "use strict";
-const observe = (value) => {
+const observe = (value, $vm) => {
     if (!value || typeof value !== 'object') {
         return false;
     }
-    return new Observer(value);
+    return new Observer(value, $vm);
 };
 /**
  * 监视者, 数据劫持
  * 通知变化(Dep 队列)
  */
 class Observer {
-    constructor(data) {
+    constructor(data, $vm) {
         /** 逐步添加反应式 */
         this.walk = () => {
             Object.keys(this.data).forEach((key) => {
@@ -36,19 +36,22 @@ class Observer {
                     return value;
                 },
                 set: (newVal) => {
+                    var _a, _b;
                     if (newVal === value) {
                         return false;
                     }
+                    (_b = (_a = this.$vm.$options).beforeUpdate) === null || _b === void 0 ? void 0 : _b.call(_a);
                     value = newVal;
                     // 新的值如果是 object，再次进行劫持
-                    observe(value);
+                    observe(value, this.$vm);
                     // 通知订阅者
                     dep.notify();
                 }
             });
-            observe(value);
+            observe(value, this.$vm);
         };
         this.data = data;
+        this.$vm = $vm;
         this.walk();
     }
 }

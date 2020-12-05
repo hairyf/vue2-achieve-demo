@@ -1,6 +1,7 @@
 "use strict";
 class Compile {
     constructor(el, $vm) {
+        var _a, _b, _c, _d;
         /** 将原生节点拷贝到 fragment 上 */
         this.node2Fragment = (el) => {
             const fragment = document.createDocumentFragment();
@@ -72,9 +73,11 @@ class Compile {
         };
         this.$vm = $vm;
         this.$el = document.querySelector(el) || document.body;
+        (_b = (_a = $vm.$options).beforeMount) === null || _b === void 0 ? void 0 : _b.call(_a);
         this.$fragment = this.node2Fragment(this.$el);
         this.compileElement(this.$fragment);
         this.$el.appendChild(this.$fragment);
+        (_d = (_c = $vm.$options).mounted) === null || _d === void 0 ? void 0 : _d.call(_c);
     }
 }
 // 递归取出对象值, 在取值时, Dep 与 Watcher 则会绑定对应关系
@@ -145,7 +148,9 @@ const compileUtils = {
         const updaterFunc = updaterNode[expFuncKey];
         updaterFunc && updaterFunc(node, _getVMVal($vm, exp));
         new Watcher($vm, exp, function (value, oldValue) {
+            var _a, _b;
             updaterFunc && updaterFunc(node, value, oldValue);
+            (_b = (_a = $vm.$options).updated) === null || _b === void 0 ? void 0 : _b.call(_a);
         });
     },
     /** 属性节点指令事件处理
