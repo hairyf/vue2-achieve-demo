@@ -35,7 +35,7 @@ class Compile {
         this.compileAttribute = (node) => {
             const nodeAttrs = node.attributes;
             Array.from(nodeAttrs).forEach(attr => {
-                var _a;
+                var _a, _b;
                 const attrName = attr.name;
                 // 如果不是 v- 开头, 则跳出函数
                 if (!this.isDirective(attrName)) {
@@ -45,10 +45,11 @@ class Compile {
                 const dir = attrName.substring(2);
                 // 如该指令是事件指令
                 if (this.isEventDirective(dir)) {
+                    (_a = compileUtils['eventHandler']) === null || _a === void 0 ? void 0 : _a.call(compileUtils, node, this.$vm, exp, dir);
                     return false;
                 }
                 // 如该指令是普通指令
-                (_a = compileUtils[dir]) === null || _a === void 0 ? void 0 : _a.call(compileUtils, node, this.$vm, exp);
+                (_b = compileUtils[dir]) === null || _b === void 0 ? void 0 : _b.call(compileUtils, node, this.$vm, exp);
             });
         };
         /** 编译文本节点表达式 */

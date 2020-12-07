@@ -12,6 +12,7 @@
     <span>{{info.count}}</span>
     <input v-model="info.name" type="text">
     <span>{{info.name}}</span>
+    <span v-on:click="onHandleClick">click</span>
   </div>
 </body>
 <script src="dist/watcher.js"></script>
@@ -27,14 +28,10 @@
         name: '',
       }
     },
-    beforeCreate() {
-      console.log('--beforeCreate--')
-    },
-    beforeUpdate() {
-      console.log('--beforeUpdate--')
-    },
-    updated() {
-      console.log('--updated--')
+    methods: {
+      onHandleClick($event){
+        console.log($event)
+      }
     }
   })
   setInterval(() => {

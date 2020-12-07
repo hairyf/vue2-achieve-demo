@@ -53,6 +53,7 @@ class Compile {
       const dir = attrName.substring(2) as keyof typeof compileUtils
       // 如该指令是事件指令
       if (this.isEventDirective(dir)) {
+        compileUtils['eventHandler']?.(node, this.$vm, exp, dir)
         return false;
       }
       // 如该指令是普通指令
